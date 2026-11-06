@@ -1,0 +1,421 @@
+/* ============ МедиаКоми — фирменный стиль HSE #012D6E ============ */
+:root {
+  --hse-blue: #012D6E;
+  --hse-blue-dark: #011F4D;
+  --hse-blue-light: #1A4A94;
+  --accent: #2E7CF6;
+  --bg: #F2F5FA;
+  --card: #FFFFFF;
+  --text: #16233B;
+  --muted: #66748E;
+  --good: #178A50;
+  --warn: #C2410C;
+  --radius: 16px;
+  --shadow: 0 6px 24px rgba(1, 45, 110, .10);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html { height: 100%; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100%;
+  line-height: 1.45;
+}
+
+/* ---------- Экраны ---------- */
+.screen {
+  display: none;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: 16px 16px calc(20px + env(safe-area-inset-bottom));
+  flex-direction: column;
+}
+.screen.active { display: flex; }
+
+/* ---------- Стартовый экран ---------- */
+.start-hero {
+  text-align: center;
+  padding: 28px 0 20px;
+}
+.logo-badge {
+  width: 72px; height: 72px;
+  margin: 0 auto 14px;
+  background: var(--hse-blue);
+  border-radius: 18px;
+  display: grid; place-items: center;
+  box-shadow: var(--shadow);
+}
+.logo-badge svg { width: 42px; height: 42px; }
+
+.brand {
+  font-size: 34px;
+  letter-spacing: -0.5px;
+  color: var(--hse-blue);
+  font-weight: 800;
+}
+.brand span { color: var(--accent); }
+
+.tagline {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.rules-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.rules-card h2 {
+  font-size: 17px;
+  color: var(--hse-blue);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+.rules-list {
+  list-style: none;
+  counter-reset: rule;
+}
+.rules-list li {
+  counter-increment: rule;
+  position: relative;
+  padding-left: 38px;
+  margin-bottom: 12px;
+  font-size: 14.5px;
+  color: #2B3A55;
+}
+.rules-list li::before {
+  content: counter(rule);
+  position: absolute;
+  left: 0; top: 1px;
+  width: 26px; height: 26px;
+  background: var(--hse-blue);
+  color: #fff;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.source-note {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 14px;
+}
+
+/* ---------- Кнопки ---------- */
+.btn-primary {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  background: var(--hse-blue);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+  font-family: inherit;
+}
+.btn-primary:active { background: var(--hse-blue-dark); transform: scale(.985); }
+.btn-primary:disabled { opacity: .55; cursor: default; }
+.btn-block { width: 100%; margin-top: 14px; }
+
+/* ---------- Шапка игры / прогресс ---------- */
+.game-header { padding: 4px 2px 12px; }
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.round-label { font-weight: 700; font-size: 15px; color: var(--hse-blue); }
+.score-label { font-size: 13px; color: var(--muted); font-weight: 600; }
+.progress-track {
+  height: 8px;
+  background: #DDE5F0;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--hse-blue), var(--accent));
+  border-radius: 99px;
+  transition: width .35s ease;
+}
+
+/* ---------- Карточка квартиры ---------- */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery { position: relative; }
+.gallery-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  aspect-ratio: 4 / 3;
+  background: #E8EDF5;
+}
+.gallery-track::-webkit-scrollbar { display: none; }
+.gallery-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  position: relative;
+  background: #E8EDF5;
+}
+.gallery-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gallery-counter {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: rgba(1, 29, 77, .72);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 99px;
+  backdrop-filter: blur(4px);
+}
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0 2px;
+}
+.gallery-dots i {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #C4CFDF;
+  transition: background .2s, transform .2s;
+}
+.gallery-dots i.on { background: var(--hse-blue); transform: scale(1.25); }
+
+.card-info { padding: 12px 16px 4px; }
+.apt-title { font-size: 18px; font-weight: 700; }
+.apt-street { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+
+/* ---------- Бегунок цены ---------- */
+.guess-area { padding: 10px 16px 16px; }
+.guess-value-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.guess-label { font-size: 13px; color: var(--muted); font-weight: 600; }
+.guess-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--hse-blue);
+  font-variant-numeric: tabular-nums;
+}
+
+.price-slider {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 34px;
+  background: transparent;
+  cursor: pointer;
+}
+.price-slider::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--hse-blue) var(--fill, 22%), #DDE5F0 var(--fill, 22%));
+}
+.price-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--hse-blue);
+  margin-top: -9px;
+  box-shadow: 0 2px 8px rgba(1, 45, 110, .35);
+}
+.price-slider::-moz-range-track {
+  height: 8px;
+  border-radius: 99px;
+  background: #DDE5F0;
+}
+.price-slider::-moz-range-progress {
+  height: 8px;
+  border-radius: 99px;
+  background: var(--hse-blue);
+}
+.price-slider::-moz-range-thumb {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--hse-blue);
+  box-shadow: 0 2px 8px rgba(1, 45, 110, .35);
+}
+.slider-scale {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11.5px;
+  margin-bottom: 2px;
+}
+
+/* ---------- Результат раунда ---------- */
+.round-result { padding: 4px 16px 16px; animation: slideUp .3s ease; }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.points-badge {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin: 2px 0 12px;
+}
+.points-badge span {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--accent);
+}
+.points-badge small { color: var(--muted); font-size: 14px; }
+
+.price-reveal {
+  border-top: 1px solid #E8EDF5;
+  padding-top: 10px;
+}
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 5px 0;
+}
+.price-row-label { color: var(--muted); font-size: 13.5px; }
+.price-real { font-weight: 800; font-size: 17px; color: var(--good); }
+.price-user { font-weight: 700; font-size: 15px; }
+.price-diff { font-weight: 800; font-size: 15px; }
+.diff-row { border-top: 1px dashed #DDE5F0; margin-top: 4px; padding-top: 9px; }
+.price-diff.over { color: var(--warn); }
+.price-diff.under { color: var(--hse-blue-light); }
+.price-diff.exact { color: var(--good); }
+
+.verdict-text {
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: #2B3A55;
+  background: #F2F6FC;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.avito-link {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 10px;
+  border: 1.5px solid #D6E3F8;
+  border-radius: 12px;
+}
+.avito-link:active { background: #F0F5FD; }
+
+.hidden { display: none !important; }
+
+/* ---------- Итоговый экран ---------- */
+.result-card { padding: 22px 18px 18px; align-items: center; text-align: center; }
+.archetype-emoji { font-size: 52px; line-height: 1; }
+.archetype-name {
+  margin-top: 10px;
+  font-size: 26px;
+  color: var(--hse-blue);
+  font-weight: 800;
+}
+.archetype-desc {
+  margin-top: 8px;
+  color: #2B3A55;
+  font-size: 14.5px;
+  max-width: 340px;
+}
+
+.final-score-box {
+  margin: 18px 0;
+  background: var(--hse-blue);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  width: 100%;
+}
+.final-score-num { font-size: 40px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.final-score-num small { font-size: 17px; font-weight: 600; opacity: .75; margin-left: 4px; }
+.final-score-cap { font-size: 12.5px; opacity: .8; letter-spacing: .5px; text-transform: uppercase; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+.stat-box {
+  background: #F2F6FC;
+  border-radius: 12px;
+  padding: 12px 8px;
+}
+.stat-num { display: block; font-size: 19px; font-weight: 800; color: var(--hse-blue); font-variant-numeric: tabular-nums; }
+.stat-cap { font-size: 11.5px; color: var(--muted); }
+
+.rounds-list {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 6px;
+  border-top: 1px solid #E8EDF5;
+}
+.rounds-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 2px;
+  border-bottom: 1px solid #EEF2F8;
+  font-size: 13px;
+}
+.rounds-row .r-num {
+  width: 22px; height: 22px;
+  flex: 0 0 22px;
+  background: var(--hse-blue);
+  color: #fff;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+.rounds-row .r-desc { flex: 1; color: #2B3A55; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rounds-row .r-points { font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+/* ---------- Большие экраны ---------- */
+@media (min-width: 520px) {
+  .screen { padding-top: 28px; }
+  .card { flex: 0 0 auto; }
+}

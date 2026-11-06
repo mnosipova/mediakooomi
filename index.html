@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#012D6E">
+  <title>МедиаКоми — угадай цену квартиры</title>
+  <meta name="description" content="Игра: угадывайте цену квартир из объявлений Республики Коми и узнайте, жадный вы студент, адекватный квартирант или транжира.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23012D6E'/%3E%3Cpath d='M14 32 32 16l18 16v18H38V38h-12v12H14z' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ ЭКРАН 1: СТАРТ ============ -->
+  <section id="screen-start" class="screen active">
+    <div class="start-hero">
+      <div class="logo-badge">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 32 32 16l18 16v18H38V38h-12v12H14z" fill="#fff"/></svg>
+      </div>
+      <h1 class="brand">Медиа<span>Коми</span></h1>
+      <p class="tagline">Угадай цену квартиры в Республике Коми</p>
+    </div>
+
+    <div class="rules-card">
+      <h2>Как играть</h2>
+      <ol class="rules-list">
+        <li><b>10 квартир</b> — в каждом раунде мы показываем фотографии и описание реального объявления.</li>
+        <li><b>Двигайте бегунок</b> и назовите цену, которую, по-вашему, просит продавец.</li>
+        <li><b>Нажмите «Оценить»</b> — узнаете настоящую цену, свою ошибку и очки.</li>
+        <li>Максимум <b>100 очков</b> за квартиру, <b>1000</b> за игру. В конце — ваш ценовой портрет!</li>
+      </ol>
+    </div>
+
+    <button id="btn-start" class="btn-primary">Запустить игру</button>
+    <p class="source-note">Данные: активные объявления Avito · Сыктывкар не пострадал</p>
+  </section>
+
+  <!-- ============ ЭКРАН 2: РАУНД ============ -->
+  <section id="screen-game" class="screen">
+    <header class="game-header">
+      <div class="progress-row">
+        <span id="round-label" class="round-label">Квартира 1 / 10</span>
+        <span id="score-label" class="score-label">0 очков</span>
+      </div>
+      <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+    </header>
+
+    <main class="card">
+      <!-- Галерея -->
+      <div class="gallery">
+        <div id="gallery-track" class="gallery-track"><!-- слайды из JS --></div>
+        <div id="gallery-counter" class="gallery-counter"></div>
+        <div id="gallery-dots" class="gallery-dots"></div>
+      </div>
+
+      <div class="card-info">
+        <h2 id="apt-title" class="apt-title"></h2>
+        <p id="apt-street" class="apt-street"></p>
+      </div>
+
+      <!-- Бегунок цены -->
+      <div id="guess-area" class="guess-area">
+        <div class="guess-value-row">
+          <span class="guess-label">Ваша цена</span>
+          <span id="guess-value" class="guess-value">500 000 ₽</span>
+        </div>
+        <input type="range" id="price-slider" class="price-slider" min="50000" max="2000000" step="5000" value="500000" aria-label="Оценка цены квартиры">
+        <div class="slider-scale"><span>50 тыс.</span><span>2 млн ₽</span></div>
+        <button id="btn-guess" class="btn-primary btn-block">Оценить</button>
+      </div>
+
+      <!-- Результат раунда -->
+      <div id="round-result" class="round-result hidden">
+        <div class="points-badge"><span id="round-points">+0</span><small>очков</small></div>
+        <div class="price-reveal">
+          <div class="price-row">
+            <span class="price-row-label">Реальная цена</span>
+            <span id="real-price" class="price-real"></span>
+          </div>
+          <div class="price-row">
+            <span class="price-row-label">Ваша оценка</span>
+            <span id="user-price" class="price-user"></span>
+          </div>
+          <div class="price-row diff-row">
+            <span class="price-row-label">Разница</span>
+            <span id="price-diff" class="price-diff"></span>
+          </div>
+        </div>
+        <p id="verdict-text" class="verdict-text"></p>
+        <a id="avito-link" class="avito-link" href="#" target="_blank" rel="noopener">Открыть объявление на Avito ↗</a>
+        <button id="btn-next" class="btn-primary btn-block">Следующая квартира</button>
+      </div>
+    </main>
+  </section>
+
+  <!-- ============ ЭКРАН 3: ИТОГИ ============ -->
+  <section id="screen-result" class="screen">
+    <header class="game-header">
+      <div class="progress-row">
+        <span class="round-label">Итоги игры</span>
+        <span id="final-score-top" class="score-label"></span>
+      </div>
+      <div class="progress-track"><div id="progress-fill-final" class="progress-fill"></div></div>
+    </header>
+
+    <main class="card result-card">
+      <div id="archetype-emoji" class="archetype-emoji">🏡</div>
+      <h2 id="archetype-name" class="archetype-name"></h2>
+      <p id="archetype-desc" class="archetype-desc"></p>
+
+      <div class="final-score-box">
+        <div class="final-score-num"><span id="final-score">0</span><small>/ 1000</small></div>
+        <div class="final-score-cap">итоговый счёт</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box"><span id="stat-avg-err" class="stat-num"></span><span class="stat-cap">средняя ошибка</span></div>
+        <div class="stat-box"><span id="stat-bias" class="stat-num"></span><span class="stat-cap">среднее смещение</span></div>
+        <div class="stat-box"><span id="stat-best" class="stat-num"></span><span class="stat-cap">лучший раунд</span></div>
+        <div class="stat-box"><span id="stat-worst" class="stat-num"></span><span class="stat-cap">худший раунд</span></div>
+      </div>
+
+      <div id="rounds-list" class="rounds-list"></div>
+
+      <button id="btn-restart" class="btn-primary btn-block">Играть снова</button>
+    </main>
+  </section>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
